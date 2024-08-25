@@ -5,7 +5,8 @@ import { createRoot } from 'react-dom/client'
 // import App from './App_useAuth.jsx'
 // import App from './App_searchComponent.jsx'
 // import App from './App_useLocalStorage.jsx'
-import App from './App_useDarkMode.jsx'
+// import App from './App_useDarkMode.jsx'
+import App from './App_InfiniteScrollComponent.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
