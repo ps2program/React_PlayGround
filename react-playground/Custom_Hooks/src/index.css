@@ -66,3 +66,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* for useDarkMode */
+/* Light theme */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark theme */
+body.dark {
+  background-color: #000000;
+  color: #ffffff;
+}
