@@ -190,3 +190,96 @@ With these steps, you should have a working gRPC server and a React client using
 
 
 npm install @improbable-eng/grpc-web
+
+
+
+______________________________________
+
+setting protoc
+
+To generate the necessary files from your `helloworld.proto` file, you'll need to use the `protoc` command along with the appropriate plugin for your desired output. Below are the steps to create the two files for JavaScript/TypeScript with gRPC-Web.
+
+### **Step 1: Install the Required Tools**
+
+1. **Install Protocol Buffers Compiler (`protoc`)**:
+   - Download and install `protoc` from [Protocol Buffers Releases](https://github.com/protocolbuffers/protobuf/releases).
+
+2. **Install gRPC-Web Plugin (`protoc-gen-grpc-web`)**:
+   - Download `protoc-gen-grpc-web` from [gRPC-Web Releases](https://github.com/grpc/grpc-web/releases) or install via Homebrew (macOS/Linux):
+   
+     ```bash
+     brew install grpc-web
+     ```
+
+3. **Ensure Both `protoc` and `protoc-gen-grpc-web` Are in Your PATH**:
+   - Verify by running `protoc --version` and `protoc-gen-grpc-web --version` in your terminal.
+
+### **Step 2: Create the `.proto` File**
+
+Create a file named `helloworld.proto` with the following content:
+
+```proto
+syntax = "proto3";
+
+package helloworld;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+```
+
+### **Step 3: Generate JavaScript/TypeScript Files**
+
+Open your terminal and navigate to the directory containing `helloworld.proto`. Run the following command:
+
+```bash
+protoc -I=. \
+  helloworld.proto \
+  --js_out=import_style=commonjs,binary:./generated \
+  --grpc-web_out=import_style=typescript,mode=grpcwebtext:./generated
+```
+
+### **Step 4: Verify the Output**
+
+After running the command, you should see two generated files in the `./generated` directory:
+
+1. **`helloworld_pb.js`** (or `.ts` if you're using TypeScript): This file contains the JavaScript/TypeScript code for your Protocol Buffer messages.
+
+2. **`helloworld_grpc_web_pb.js`** (or `.ts` if you're using TypeScript): This file contains the gRPC-Web client code.
+
+### **Step 5: Use the Generated Files**
+
+You can now import and use these generated files in your client-side code.
+
+### **Example Usage in JavaScript/TypeScript:**
+
+```javascript
+import { HelloRequest } from './generated/helloworld_pb';
+import { GreeterClient } from './generated/helloworld_grpc_web_pb';
+
+// Create a new client instance
+const client = new GreeterClient('http://localhost:8080');
+
+// Create a new request
+const request = new HelloRequest();
+request.setName('World');
+
+// Call the gRPC method
+client.sayHello(request, {}, (err, response) => {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Greeting:', response.getMessage());
+  }
+});
+```
+
+This setup allows you to work with gRPC-Web in your JavaScript/TypeScript project.
