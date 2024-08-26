@@ -9,7 +9,8 @@ import { createRoot } from 'react-dom/client'
 // import App from './App_InfiniteScrollComponent.jsx'
 // import App from './App_useWebSocket.jsx'
 // import App from './App_useGeoLocation.jsx'
-import App from './App_usegRPC.jsx'
+// import App from './App_usegRPC.jsx'
+import App from './App_useSocket.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
